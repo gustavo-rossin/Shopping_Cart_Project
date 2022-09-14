@@ -17,7 +17,7 @@ const createProductImageElement = (imageSource) => {
 
 /**
  * Função responsável por criar e retornar qualquer elemento.
- * @param {string} element - Nome do elemento a ser criado.
+ * @param {string} element - Nome do elemento a ser criado..
  * @param {string} className - Classe do elemento.
  * @param {string} innerText - Texto do elemento.
  * @returns {Element} Elemento criado.
