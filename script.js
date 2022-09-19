@@ -56,6 +56,10 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
  */
 const getIdFromProductItem = (product) => product.querySelector('span.id').innerText;
 
+const cartItemClickListener = () => {
+
+};
+
 /**
  * Função responsável por criar e retornar um item do carrinho.
  * @param {Object} product - Objeto do produto.
@@ -72,18 +76,36 @@ const createCartItemElement = ({ id, title, price }) => {
   return li;
 };
 
+// * Questão 02:
 const productList = async () => {
   const classItems = document.querySelector('.items');
   const computer = await fetchProducts('computador');
-  const eaProd = await computer.results.forEach((el) => {
+  const eachProd = await computer.results.forEach((el) => {
     const createItemElement = createProductItemElement(el);
     classItems.appendChild(createItemElement);
   });
-  return eaProd;
+  return eachProd;
+};
+
+// * Questão 04:
+const cartList = async (event) => {
+  const cartClass = document.querySelector('.cart__items');
+  const id = event.target.parentNode.firstChild.innerText;
+  const itemID = await fetchItem(id);
+  const idProd = await createCartItemElement(itemID);
+  await cartClass.appendChild(idProd);
+  return idProd;
+};
+
+const acaoBtn = () => {
+  let botoes = document.getElementsByClassName('item__add');
+  botoes = [...botoes];
+  botoes.forEach((botao) => botao.addEventListener('click', cartList));
 };
 
 window.onload = () => { };
 
-window.onload = () => {
-  productList();
+window.onload = async () => {
+  await productList();
+  await acaoBtn();
 };
