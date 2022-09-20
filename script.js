@@ -87,7 +87,7 @@ const productList = async () => {
   return eachProd;
 };
 
-// * Questão 04:
+// * Questão 04: feito com ajuda do Hugo Ramos e Matheus Paiva - turma 25A
 const cartList = async (event) => {
   const cartClass = document.querySelector('.cart__items');
   const id = event.target.parentNode.firstChild.innerText;
@@ -103,9 +103,22 @@ const acaoBtn = () => {
   botoes.forEach((botao) => botao.addEventListener('click', cartList));
 };
 
+// * Questão 5:
+const removeCartItem = async (event) => {
+  const rmvItems = await event.target.remove();
+  return rmvItems;
+};
+
+const rmvBtn = async () => {
+  let cartItems = await document.getElementsByClassName('cart__items');
+  cartItems = [...cartItems];
+  cartItems.forEach((item) => item.addEventListener('click', removeCartItem));
+};
+
 window.onload = () => { };
 
 window.onload = async () => {
   await productList();
   await acaoBtn();
+  await rmvBtn();
 };
