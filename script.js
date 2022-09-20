@@ -54,7 +54,7 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
  * @param {Element} product - Elemento do produto.
  * @returns {string} ID do produto.
  */
-const getIdFromProductItem = (product) => product.querySelector('span.id').innerText;
+const getIdFromProductItem = (product) => product.querySelector('span.item_id').innerText;
 
 const cartItemClickListener = () => {
 
@@ -94,6 +94,7 @@ const cartList = async (event) => {
   const itemID = await fetchItem(id);
   const idProd = await createCartItemElement(itemID);
   await cartClass.appendChild(idProd);
+  saveCartItems(cartClass.innerHTML);
   return idProd;
 };
 
@@ -106,6 +107,7 @@ const acaoBtn = () => {
 // * Questão 5:
 const removeCartItem = async (event) => {
   const rmvItems = await event.target.remove();
+  saveCartItems();
   return rmvItems;
 };
 
@@ -115,10 +117,18 @@ const rmvBtn = async () => {
   cartItems.forEach((item) => item.addEventListener('click', removeCartItem));
 };
 
+// * Questão 8: mentoria da casa de cambio
+
+const getLocalStorageItems = async () => {
+  const cartItems = document.querySelector('.cart__items');
+  cartItems.innerHTML = await getSavedCartItems();
+};
+
 window.onload = () => { };
 
 window.onload = async () => {
   await productList();
   await acaoBtn();
   await rmvBtn();
+  await getLocalStorageItems();
 };
