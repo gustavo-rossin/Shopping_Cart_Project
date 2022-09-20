@@ -87,14 +87,15 @@ const productList = async () => {
   return eachProd;
 };
 
+const cartItems = document.querySelector('.cart__items');
+
 // * Questão 04: feito com ajuda do Hugo Ramos e Matheus Paiva - turma 25A
 const cartList = async (event) => {
-  const cartClass = document.querySelector('.cart__items');
   const id = event.target.parentNode.firstChild.innerText;
   const itemID = await fetchItem(id);
   const idProd = await createCartItemElement(itemID);
-  await cartClass.appendChild(idProd);
-  saveCartItems(cartClass.innerHTML);
+  await cartItems.appendChild(idProd);
+  saveCartItems(cartItems.innerHTML);
   return idProd;
 };
 
@@ -112,16 +113,24 @@ const removeCartItem = async (event) => {
 };
 
 const rmvBtn = async () => {
-  let cartItems = await document.getElementsByClassName('cart__items');
-  cartItems = [...cartItems];
-  cartItems.forEach((item) => item.addEventListener('click', removeCartItem));
+  let cartElementItems = await document.getElementsByClassName('cart__items');
+  cartElementItems = [...cartElementItems];
+  cartElementItems.forEach((item) => item.addEventListener('click', removeCartItem));
 };
 
 // * Questão 8: mentoria da casa de cambio
 
 const getLocalStorageItems = async () => {
-  const cartItems = document.querySelector('.cart__items');
   cartItems.innerHTML = await getSavedCartItems();
+};
+
+// * Questão 10:
+
+const btnClearCart = async () => {
+  const carrinhoVazio = await document.querySelector('.empty-cart');
+  carrinhoVazio.addEventListener('click', () => {
+    cartItems.innerHTML = '';
+  });
 };
 
 window.onload = () => { };
@@ -131,4 +140,5 @@ window.onload = async () => {
   await acaoBtn();
   await rmvBtn();
   await getLocalStorageItems();
+  await btnClearCart();
 };
